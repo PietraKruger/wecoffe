@@ -29,6 +29,9 @@ create table cardapios (
     
 )
 
+insert into cardapios ( bebida_cardapio, comida_cardapio, valor_cardapio) values
+('Café cappuccino', 'Pão de queijo', 10)
+
 create table favoritos (
     id_favorito serial primary key,
     id_usuario serial,
@@ -42,3 +45,6 @@ create table favoritos (
         references cardapios(id_cardapio)
     
 )
+
+insert into usuarios (nome_usuario, email_usuario, chefe_usuario,senha_usuario) values
+('Pablo', 'pablo@gmail.com', 'Chefe',123456 )
