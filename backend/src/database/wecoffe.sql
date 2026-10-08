@@ -1,30 +1,44 @@
 select * from usuarios 
-select * from chefes
 select * from cardapios
+select * from favoritos
 
 create table usuarios (
-    id_usuario serial primary key, 
-    nome_usuario varchar(50) not null,
-    email_usuario varchar(50) not null unique,
+    id_usuario serial primary key,
+    nome_usuario varchar(100) not null,
+    email_usuario varchar(100) not null unique,
     senha_usuario varchar(100) not null,
+    foto_url varchar(100),
+    chefe_usuario tipo,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    id_cardapio serial
+    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
-create table chefes (
-    id_chefe serial primary key,
-    nome_chefe varchar (80) not null,
-    email_chefe varchar(80) not null unique,
-    senha_chefe varchar(80) not null,
-    id_cardapio serial
-)
+CREATE TYPE tipo AS ENUM ('Chefe','Usuario');
 
 create table cardapios (
     id_cardapio serial primary key,
     id_usuario serial,
     id_chefe serial,
-    bebida_cardapio varchar(60) not null,
-    comida_cardapio varchar(60) not null,
-    cafe_cardapio varchar(60) not null
+    cardapio_url varchar(100),
+    bebida_cardapio varchar(100),
+    comida_cardapio varchar(100),
+    valor_cardapio numeric(10,2) not null,
+        CONSTRAINT fk_cardapio_usuario
+        FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id_usuario)
+    
+)
+
+create table favoritos (
+    id_favorito serial primary key,
+    id_usuario serial,
+    id_cardapio serial,
+        CONSTRAINT fk_favorito_usuario
+        FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id_usuario),
+        
+        constraint fk_favorito_cardapio
+        foreign key (id_cardapio)
+        references cardapios(id_cardapio)
+    
 )
